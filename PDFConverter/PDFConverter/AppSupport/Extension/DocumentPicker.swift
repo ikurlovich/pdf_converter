@@ -2,11 +2,12 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentPicker: UIViewControllerRepresentable {
-    @Binding var selectedFileURL: URL?
+    var completion: ([UIImage]) -> Void  // Завершение для возврата изображений
     
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.item])
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.image])
         picker.delegate = context.coordinator
+        picker.allowsMultipleSelection = true
         return picker
     }
     
@@ -24,11 +25,35 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
         
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            parent.selectedFileURL = urls.first
+            var images = [UIImage]()
+            
+            for url in urls {
+                print("Selected URL: \(url)")  // Отладка URL
+                
+                // Проверка на изображение перед загрузкой данных
+                if url.startAccessingSecurityScopedResource() {
+                    defer { url.stopAccessingSecurityScopedResource() }
+                    do {
+                        let data = try Data(contentsOf: url)
+                        if let image = UIImage(data: data) {
+                            images.append(image)
+                        } else {
+                            print("Failed to convert data to UIImage for URL: \(url)")
+                        }
+                    } catch {
+                        print("Error loading image data from URL: \(error.localizedDescription)")
+                    }
+                } else {
+                    print("Failed to access security scoped resource for URL: \(url)")
+                }
+            }
+            
+            print("Total images loaded: \(images.count)")
+            parent.completion(images)
         }
         
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-            parent.selectedFileURL = nil
+            parent.completion([])  // Возвращаем пустой массив при отмене
         }
     }
 }

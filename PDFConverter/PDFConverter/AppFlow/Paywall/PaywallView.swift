@@ -98,7 +98,7 @@ struct PaywallView: View {
                 if viewModel.isShowCloseButton {
                     Button(action: closeAction) {
                         Image(systemName: "xmark")
-                            .foregroundStyle(.white.opacity(0.5))
+                            .foregroundStyle(.white)
                             .opacity(viewModel.observeAppConfig.closeOpacity)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                             .padding(.top, 80)

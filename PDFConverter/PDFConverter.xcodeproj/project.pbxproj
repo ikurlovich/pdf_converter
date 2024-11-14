@@ -54,7 +54,6 @@
 		20E589E62CDE1FD000CCEA28 /* CustomBackGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589E52CDE1FD000CCEA28 /* CustomBackGesture.swift */; };
 		20E589E92CDFA0A000CCEA28 /* NavigationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589E82CDFA0A000CCEA28 /* NavigationLabel.swift */; };
 		20E589EB2CDFC91B00CCEA28 /* PermissionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589EA2CDFC91B00CCEA28 /* PermissionsService.swift */; };
-		20E589EE2CDFE24500CCEA28 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589ED2CDFE24500CCEA28 /* CameraView.swift */; };
 		20E589F02CE1782400CCEA28 /* OnboardingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589EF2CE1782400CCEA28 /* OnboardingStep.swift */; };
 		20E589F22CE1790A00CCEA28 /* OnboardingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589F12CE1790A00CCEA28 /* OnboardingLabel.swift */; };
 		20E589F42CE17BD100CCEA28 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E589F32CE17BD100CCEA28 /* OnboardingCoordinator.swift */; };
@@ -92,7 +91,6 @@
 		20E589E82CDFA0A000CCEA28 /* NavigationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationLabel.swift; sourceTree = "<group>"; };
 		20E589EA2CDFC91B00CCEA28 /* PermissionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsService.swift; sourceTree = "<group>"; };
 		20E589EC2CDFCBEA00CCEA28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		20E589ED2CDFE24500CCEA28 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		20E589EF2CE1782400CCEA28 /* OnboardingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStep.swift; sourceTree = "<group>"; };
 		20E589F12CE1790A00CCEA28 /* OnboardingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLabel.swift; sourceTree = "<group>"; };
 		20E589F32CE17BD100CCEA28 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
@@ -206,13 +204,12 @@
 			isa = PBXGroup;
 			children = (
 				20E58A002CE1A9C900CCEA28 /* MailView.swift */,
-				20E589ED2CDFE24500CCEA28 /* CameraView.swift */,
 				200E2D962CDC018000BB178B /* RoundedCorners.swift */,
-				20E589DC2CDD232000CCEA28 /* PhotoPicker.swift */,
-				20E589E12CDD268700CCEA28 /* DocumentPicker.swift */,
 				20E589E32CDE1CF600CCEA28 /* CustomTabBarAppearance.swift */,
 				20E589E52CDE1FD000CCEA28 /* CustomBackGesture.swift */,
 				20E589F82CE1838F00CCEA28 /* BreathingEffect.swift */,
+				20E589DC2CDD232000CCEA28 /* PhotoPicker.swift */,
+				20E589E12CDD268700CCEA28 /* DocumentPicker.swift */,
 				2079A41D2CE4022D00C83E81 /* DocumentScannerView.swift */,
 			);
 			path = Extension;
@@ -449,7 +446,6 @@
 				20E589DD2CDD232000CCEA28 /* PhotoPicker.swift in Sources */,
 				200E2DD22CDD1D6800BB178B /* OnboardingView.swift in Sources */,
 				200E2D972CDC018000BB178B /* RoundedCorners.swift in Sources */,
-				20E589EE2CDFE24500CCEA28 /* CameraView.swift in Sources */,
 				20E589E22CDD268700CCEA28 /* DocumentPicker.swift in Sources */,
 				20E589E92CDFA0A000CCEA28 /* NavigationLabel.swift in Sources */,
 				20E58A012CE1A9C900CCEA28 /* MailView.swift in Sources */,

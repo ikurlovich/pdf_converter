@@ -5,10 +5,6 @@ struct MainView: View {
     private var viewModel = MainViewModel()
     
     @State
-    private var selectedImage: UIImage?
-    @State
-    private var selectedFileURL: URL?
-    @State
     private var scannedImages: [UIImage] = []
     
     let settingsAction: () -> Void
@@ -21,19 +17,23 @@ struct MainView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.customMain)
         .sheet(isPresented: $viewModel.isPhotoPickerPresented) {
-            PhotoPicker(selectedImage: $selectedImage)
+            PhotoPicker(selectedImages: $scannedImages)
                 .ignoresSafeArea()
+                .onDisappear { print("+\(scannedImages)") }
         }
         .sheet(isPresented: $viewModel.isFilePickerPresented) {
-            DocumentPicker(selectedFileURL: $selectedFileURL)
-                .ignoresSafeArea()
+            DocumentPicker { images in
+                scannedImages = images
+            }
+            .ignoresSafeArea()
+            .onDisappear { print("+\(scannedImages)") }
         }
         .sheet(isPresented: $viewModel.isCameraPresented) {
             DocumentScannerView { images in
                 scannedImages = images
             }
             .ignoresSafeArea()
-            .onDisappear { print("\(scannedImages)") }
+            .onDisappear { print("+\(scannedImages)") }
         }
     }
     
