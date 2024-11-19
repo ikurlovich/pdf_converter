@@ -6,7 +6,7 @@ struct MailView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let mailController = MFMailComposeViewController()
-        mailController.setToRecipients(["test.test.com"])
+        mailController.setToRecipients([AppInfo.Emails.supportEmail])
         mailController.setSubject("Feedback")
         mailController.setMessageBody("", isHTML: false)
         mailController.mailComposeDelegate = context.coordinator

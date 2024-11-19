@@ -2,7 +2,7 @@ import Foundation
 
 final class AppCoordinator: ObservableObject {
     enum ViewState {
-        case onboarding(OnboardingCoordinator), paywall, tabBar, settings
+        case onboarding(OnboardingCoordinator), paywall, tabBar, settings, scan, converter, pdfViewer
     }
     
     @Published

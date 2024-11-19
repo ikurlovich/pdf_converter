@@ -1,51 +1,61 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject
-    private var viewModel = MainViewModel()
+    @ObservedObject
+    var viewModel: MainViewModel
     
     @State
     private var scannedImages: [UIImage] = []
     
     let settingsAction: () -> Void
+    let converterAction: () -> Void
     
     var body: some View {
         VStack {
             customNavigationPanel()
-            mainMenu()
+            mainButtons()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.customMain)
         .sheet(isPresented: $viewModel.isPhotoPickerPresented) {
-            PhotoPicker(selectedImages: $scannedImages)
-                .ignoresSafeArea()
-                .onDisappear { print("+\(scannedImages)") }
-        }
-        .sheet(isPresented: $viewModel.isFilePickerPresented) {
-            DocumentPicker { images in
-                scannedImages = images
-            }
+            PhotoPicker(
+                completion: { images in
+                    viewModel.addImages(images: images)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        converterAction()
+                    }
+                },
+                closeCompletion: {}
+            )
             .ignoresSafeArea()
             .onDisappear { print("+\(scannedImages)") }
         }
-        .sheet(isPresented: $viewModel.isCameraPresented) {
-            DocumentScannerView { images in
-                scannedImages = images
-            }
+        .sheet(isPresented: $viewModel.isFilePickerPresented) {
+            DocumentPicker(
+                completion: { images in
+                    viewModel.addImages(images: images)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        converterAction()
+                    }
+                },
+                closeCompletion: {}
+            )
             .ignoresSafeArea()
             .onDisappear { print("+\(scannedImages)") }
         }
     }
     
     @ViewBuilder
-    private func mainMenu() -> some View {
+    private func mainButtons() -> some View {
         VStack {
             VStack(spacing: 15) {
                 mainMenuItem(
                     image: .camera,
                     title: "Scan",
                     description: "Open Camera",
-                    action: viewModel.cameraAction
+                    action: viewModel.scannerAction
                 )
                 
                 HStack(spacing: 15) {
@@ -90,10 +100,11 @@ struct MainView: View {
                 VStack(spacing: 5) {
                     Text(title)
                         .font(.system(size: 20, weight: .medium))
+                        .foregroundStyle(.black)
                     
                     Text(description)
                         .font(.system(size: 15))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.gray)
                 }
             }
             .frame(height: 159)
@@ -132,6 +143,8 @@ struct MainView: View {
 
 #Preview {
     MainView(
-        settingsAction: {}
+        viewModel: .init(scanAction: {}),
+        settingsAction: {},
+        converterAction: {}
     )
 }

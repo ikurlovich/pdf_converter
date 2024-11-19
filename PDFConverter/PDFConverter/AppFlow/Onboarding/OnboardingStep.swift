@@ -13,11 +13,13 @@ struct OnboardingStep: View {
                 .scaledToFit()
             
             Text(title)
+                .foregroundStyle(.black)
                 .font(.system(size: 34, weight: .bold))
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 5)
                 
             Text(description)
+                .foregroundStyle(.black)
                 .font(.system(size: 15))
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 60)

@@ -2,20 +2,21 @@ import SwiftUI
 import PhotosUI
 
 struct PhotoPicker: UIViewControllerRepresentable {
-    @Binding var selectedImages: [UIImage]
+    var completion: ([UIImage]) -> Void  // Замыкание для возврата изображений
+    var closeCompletion: () -> Void     // Замыкание для обработки закрытия
     
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
         config.filter = .images
         config.selectionLimit = 0
-
+        
         let picker = PHPickerViewController(configuration: config)
         picker.delegate = context.coordinator
         return picker
     }
     
     func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -30,19 +31,31 @@ struct PhotoPicker: UIViewControllerRepresentable {
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
-            let imageProviders = results.map { $0.itemProvider }
+            var images = [UIImage]()
+            let group = DispatchGroup()  // Для синхронизации загрузки всех изображений
             
-            for provider in imageProviders {
+            for result in results {
+                let provider = result.itemProvider
+                
                 if provider.canLoadObject(ofClass: UIImage.self) {
-                    provider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
-                        DispatchQueue.main.async {
-                            if let image = image as? UIImage {
-                                self?.parent.selectedImages.append(image)
-                            }
+                    group.enter()  // Начало загрузки изображения
+                    provider.loadObject(ofClass: UIImage.self) { image, _ in
+                        if let image = image as? UIImage {
+                            images.append(image)
                         }
+                        group.leave()  // Завершение загрузки
                     }
                 }
             }
+            
+            group.notify(queue: .main) {  // Выполнить после загрузки всех изображений
+                self.parent.completion(images)
+            }
+        }
+        
+        func pickerDidCancel(_ picker: PHPickerViewController) {
+            picker.dismiss(animated: true)
+            parent.closeCompletion()  // Вызов замыкания при отмене выбора
         }
     }
 }

@@ -1,9 +1,10 @@
 import SwiftUI
 import VisionKit
 
-struct DocumentScannerView: UIViewControllerRepresentable {
-    @Environment(\.presentationMode) var presentationMode
+struct ScannerView: UIViewControllerRepresentable {
     var completion: ([UIImage]) -> Void
+    
+    let closeCompletion: () -> Void
     
     func makeUIViewController(context: Context) -> VNDocumentCameraViewController {
         let scannerViewController = VNDocumentCameraViewController()
@@ -18,14 +19,14 @@ struct DocumentScannerView: UIViewControllerRepresentable {
     }
     
     class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        var parent: DocumentScannerView
+        var parent: ScannerView
         
-        init(_ parent: DocumentScannerView) {
+        init(_ parent: ScannerView) {
             self.parent = parent
         }
         
         func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-            parent.presentationMode.wrappedValue.dismiss()
+            parent.closeCompletion()
         }
         
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
@@ -35,7 +36,7 @@ struct DocumentScannerView: UIViewControllerRepresentable {
                 scannedImages.append(image)
             }
             parent.completion(scannedImages)
-            parent.presentationMode.wrappedValue.dismiss()
+            parent.closeCompletion()
         }
     }
 }

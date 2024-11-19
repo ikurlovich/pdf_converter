@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 final class MainViewModel: ObservableObject {
     @Published
@@ -7,10 +7,18 @@ final class MainViewModel: ObservableObject {
     @Published
     var isFilePickerPresented = false
     
-    @Published
-    var isCameraPresented = false
-    
     private let permissionsService = PermissionsService()
+    private let converterService: ConverterService = .shared
+    
+    let scanAction: () -> Void
+    
+    init(scanAction:  @escaping () -> Void) {
+        self.scanAction = scanAction
+    }
+    
+    func addImages(images: [UIImage]) {
+        converterService.addImages(images: images)
+    }
     
     func galleryAction() {
         permissionsService.callPhotoLibraryPermission {
@@ -22,9 +30,9 @@ final class MainViewModel: ObservableObject {
         isFilePickerPresented.toggle()
     }
     
-    func cameraAction() {
+    func scannerAction() {
         permissionsService.callCameraPermission {
-            self.isCameraPresented.toggle()
+            self.scanAction()
         }
     }
 }

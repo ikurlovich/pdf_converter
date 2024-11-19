@@ -4,6 +4,8 @@ import UniformTypeIdentifiers
 struct DocumentPicker: UIViewControllerRepresentable {
     var completion: ([UIImage]) -> Void  // Завершение для возврата изображений
     
+    let closeCompletion: () -> Void
+    
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.image])
         picker.delegate = context.coordinator
@@ -53,7 +55,7 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
         
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-            parent.completion([])  // Возвращаем пустой массив при отмене
+            parent.closeCompletion()
         }
     }
 }

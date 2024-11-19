@@ -108,11 +108,12 @@ struct SettingsView: View {
                     .frame(width: 32, height: 32)
                 
                 Text(title)
+                    .foregroundStyle(.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Image(systemName: "chevron.right")
+                    .foregroundStyle(.gray)
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(.secondary)
                     .opacity(0.5)
             }
             .foregroundStyle(.black)

@@ -34,18 +34,21 @@ struct PaywallView: View {
                     openURL(AppInfo.URLs.termsURL)
                 } label: {
                     Text("Terms of use")
+                        .foregroundStyle(.black)
                 }
                 
                 Button {
                     
                 } label: {
                     Text("Restore")
+                        .foregroundStyle(.black)
                 }
                 
                 Button {
                     openURL(AppInfo.URLs.privacyURL)
                 } label: {
                     Text("Privacy policy")
+                        .foregroundStyle(.black)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -59,6 +62,7 @@ struct PaywallView: View {
     private func paywallTrialSwitch() -> some View {
         HStack {
             Text("I want my Free Trial.")
+                .foregroundStyle(.black)
                 .font(.system(size: 15))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -113,6 +117,7 @@ struct PaywallView: View {
     private func paywallTitle() -> some View {
         VStack {
             Text("Full access\nto all features")
+                .foregroundStyle(.black)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 34, weight: .bold))
                 .padding(.bottom, 5)
@@ -120,6 +125,7 @@ struct PaywallView: View {
             Text(viewModel.isActiveTrial
                  ? "Start a 3-day free trial of PDF Converter app with\nno limits just for $6.99/week."
                  : "Start PDF Converter app\nwith no limits just for $6.99/week. ")
+            .foregroundStyle(.black)
             .multilineTextAlignment(.center)
             .font(.system(size: 15))
             .opacity(viewModel.observeAppConfig.closeOpacity)

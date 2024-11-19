@@ -46,7 +46,7 @@ struct OnboardingView: View {
                 .simultaneousGesture(DragGesture())
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
             .animation(.default, value: coordinator.currentStep)
             
             Button(action: coordinator.next) {

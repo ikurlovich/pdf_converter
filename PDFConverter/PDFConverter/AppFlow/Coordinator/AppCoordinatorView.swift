@@ -27,6 +27,16 @@ struct AppCoordinatorView: View {
             case .settings:
                 SettingsView(backAction: { selectView(.tabBar) })
                     .transition(.move(edge: .trailing))
+            case .scan:
+                ScanView(mainAction: { selectView(.tabBar) },
+                         converterAction: { selectView(.converter) })
+            case .converter:
+                ConverterView(backAction: { selectView(.tabBar) })
+            case .pdfViewer:
+                PDFViewer(historyAction: {
+                    selectView(.tabBar)
+                    coordinator.tabBarState = 1
+                })
             }
         }
     }
@@ -46,15 +56,18 @@ struct AppCoordinatorView: View {
     @ViewBuilder
     private func tabBar() -> some View {
         TabView(selection: $coordinator.tabBarState) {
-            MainView(settingsAction: { selectView(.settings) })
-                .tabItem {
-                    Image(.convert)
-                    
-                    Text("Convert")
-                }
-                .tag(0)
+            MainView(viewModel: .init(scanAction: { selectView(.scan) }),
+                     settingsAction: { selectView(.settings) },
+                     converterAction: { selectView(.converter) })
+            .tabItem {
+                Image(.convert)
+                
+                Text("Convert")
+            }
+            .tag(0)
             
-            HistoryView(backAction: { coordinator.tabBarState = 0 })
+            HistoryView(backAction: { coordinator.tabBarState = 0 }, 
+                        pdfViverAction: { selectView(.pdfViewer) })
                 .tabItem {
                     Image(.history)
                     
@@ -62,6 +75,7 @@ struct AppCoordinatorView: View {
                 }
                 .tag(1)
         }
+        .accentColor(.customMain)
         .background(CustomTabBarAppearance())
     }
     
