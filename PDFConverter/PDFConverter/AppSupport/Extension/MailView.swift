@@ -2,7 +2,8 @@ import SwiftUI
 import MessageUI
 
 struct MailView: UIViewControllerRepresentable {
-    @Binding var isShowing: Bool
+    @Binding 
+    var isShowing: Bool
     
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let mailController = MFMailComposeViewController()
@@ -20,7 +21,8 @@ struct MailView: UIViewControllerRepresentable {
     }
     
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        @Binding var isShowing: Bool
+        @Binding 
+        var isShowing: Bool
         
         init(isShowing: Binding<Bool>) {
             _isShowing = isShowing

@@ -8,7 +8,7 @@ struct PDFViewer: View {
     @State
     private var currentPage: Int = 0
     
-    let onClose: () -> Void // Закрытие представления
+    let onClose: () -> Void
     
     var body: some View {
         VStack {
@@ -71,18 +71,10 @@ struct PDFViewer: View {
     @ViewBuilder
     private func documentPages() -> some View {
         VStack {
-            TabView(selection: $currentPage) {
-                ForEach(Array(viewModel.pdfImages.enumerated()), id: \.offset) { index, item in
-                    Image(uiImage: item)
-                        .resizable()
-                        .scaledToFit()
-                        .tag(index)
-                }
-            }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+            PDFViewerRepresentable(url: viewModel.currentURL!, currentPage: $currentPage)
+                .edgesIgnoringSafeArea(.all)
             
-            Text("\(currentPage + 1) of \(viewModel.pdfImages.count)")
+            Text("\(currentPage + 1) of \(viewModel.filePages)")
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding(10)
@@ -104,12 +96,10 @@ struct PDFViewer: View {
         HStack(alignment: .firstTextBaseline) {
             Button{
                 onClose()
-                viewModel.deleteImages()
             } label: {
                 Text("Cancel")
                     .foregroundStyle(.customMain)
             }
-            .disabled(viewModel.isCloseActionDisable)
             
             Text(viewModel.fileName)
                 .bold()
@@ -125,6 +115,47 @@ struct PDFViewer: View {
                     .foregroundStyle(.customMain)
                     .padding(.bottom, 30)
             }
+        }
+    }
+}
+
+struct PDFViewerRepresentable: UIViewRepresentable {
+    let url: URL
+    
+    @Binding
+    var currentPage: Int
+    
+    func makeUIView(context: Context) -> PDFView {
+        let pdfView = PDFView()
+        pdfView.document = PDFDocument(url: url)
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.displayDirection = .horizontal
+        pdfView.backgroundColor = .customMainBackground
+        pdfView.delegate = context.coordinator
+        
+        NotificationCenter.default.addObserver(forName: .PDFViewPageChanged, object: pdfView, queue: .main) { _ in
+            updateCurrentPage(pdfView: pdfView, context: context)
+        }
+        
+        return pdfView
+    }
+    
+    func updateUIView(_ uiView: PDFView, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    class Coordinator: NSObject, PDFViewDelegate {
+        func pdfViewWillClick(onLink sender: PDFView, with url: URL) {}
+    }
+    
+    private func updateCurrentPage(pdfView: PDFView, context: Context) {
+        guard let currentPage = pdfView.currentPage,
+              let pageIndex = pdfView.document?.index(for: currentPage) else { return }
+        DispatchQueue.main.async {
+            self.currentPage = pageIndex
         }
     }
 }

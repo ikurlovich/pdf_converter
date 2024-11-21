@@ -58,11 +58,9 @@ final class ConverterService {
         }
         
         do {
-            // Получаем все файлы в директории с расширением .pdf
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: [.creationDateKey, .fileSizeKey], options: .skipsHiddenFiles)
                 .filter { $0.pathExtension.lowercased() == "pdf" }
             
-            // Обрабатываем каждый PDF файл
             pdfItems = fileURLs.compactMap { processPDF(at: $0) }
         } catch {
             print("Ошибка при чтении директории: \(error)")
@@ -75,20 +73,11 @@ final class ConverterService {
             return nil
         }
         
-        // Получаем имя файла
         let fileName = url.deletingPathExtension().lastPathComponent
-        
-        // Получаем превью первой страницы
         let coverImage = pdfDocument.page(at: 0)?.thumbnail(of: CGSize(width: 200, height: 300), for: .mediaBox)
-        
-        // Получаем дату создания
         let attributes = try? fileManager.attributesOfItem(atPath: url.path)
         let creationDate = attributes?[.creationDate] as? Date ?? Date()
-        
-        // Количество страниц
         let pageCount = pdfDocument.pageCount
-        
-        // Вес файла
         let fileSize = (attributes?[.size] as? Int64 ?? 0) / 1024 // в КБ
         
         guard let coverImage = coverImage else {
@@ -143,16 +132,13 @@ final class ConverterService {
         }
         
         do {
-            // Получаем список всех файлов с расширением .pdf
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                 .filter { $0.pathExtension.lowercased() == "pdf" }
-            
-            // Удаляем каждый файл
+
             for fileURL in fileURLs {
                 try fileManager.removeItem(at: fileURL)
             }
             
-            // Очищаем массив pdfItems
             pdfItems.removeAll()
             print("История очищена и все файлы удалены")
         } catch {

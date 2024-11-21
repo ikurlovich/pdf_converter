@@ -2,7 +2,6 @@ import Foundation
 
 enum DefaultsStorageKey: String {
     case isOnboardingShown = "isOnboardingShown"
-    case pdfItems = "pdfItems"
 }
 
 protocol KeyValueStorage {

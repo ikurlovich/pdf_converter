@@ -2,8 +2,8 @@ import SwiftUI
 import PhotosUI
 
 struct PhotoPicker: UIViewControllerRepresentable {
-    var completion: ([UIImage]) -> Void  // Замыкание для возврата изображений
-    var closeCompletion: () -> Void     // Замыкание для обработки закрытия
+    var completion: ([UIImage]) -> Void
+    var closeCompletion: () -> Void
     
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
@@ -32,35 +32,34 @@ struct PhotoPicker: UIViewControllerRepresentable {
             picker.dismiss(animated: true)
             
             guard !results.isEmpty else {
-                // Если ничего не выбрано, просто выходим и не вызываем completion
                 return
             }
             
             var images = [UIImage]()
-            let group = DispatchGroup()  // Для синхронизации загрузки всех изображений
+            let group = DispatchGroup()
             
             for result in results {
                 let provider = result.itemProvider
                 
                 if provider.canLoadObject(ofClass: UIImage.self) {
-                    group.enter()  // Начало загрузки изображения
+                    group.enter()
                     provider.loadObject(ofClass: UIImage.self) { image, _ in
                         if let image = image as? UIImage {
                             images.append(image)
                         }
-                        group.leave()  // Завершение загрузки
+                        group.leave()
                     }
                 }
             }
             
-            group.notify(queue: .main) {  // Выполнить после загрузки всех изображений
+            group.notify(queue: .main) {
                 self.parent.completion(images)
             }
         }
         
         func pickerDidCancel(_ picker: PHPickerViewController) {
             picker.dismiss(animated: true)
-            parent.closeCompletion()  // Вызов замыкания при отмене выбора
+            parent.closeCompletion()
         }
     }
 }

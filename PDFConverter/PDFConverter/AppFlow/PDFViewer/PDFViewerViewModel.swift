@@ -7,9 +7,6 @@ final class PDFViewerViewModel: ObservableObject {
     private(set) var currentURL: URL?
     
     @Published
-    private(set) var pdfImages: [UIImage] = []
-    
-    @Published
     var currentName: String = ""
     
     @Published
@@ -21,22 +18,22 @@ final class PDFViewerViewModel: ObservableObject {
     @Published
     var showingOptions: Bool = false
     
-    @Published
-    var isCloseActionDisable: Bool = true
-    
     var fileName: String {
         currentURL?.deletingPathExtension().lastPathComponent ?? "Error"
     }
     
+    var filePages: Int {
+        guard let url = currentURL, let document = PDFDocument(url: url) else {
+            return 0
+        }
+        return document.pageCount
+    }
+
     private let converterService: ConverterService = .shared
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
         observedCurrentURL()
-    }
-    
-    func deleteImages() {
-        pdfImages.removeAll()
     }
     
     func activeRenameFile() {
@@ -50,13 +47,12 @@ final class PDFViewerViewModel: ObservableObject {
         do {
             try FileManager.default.moveItem(at: currentURL, to: newURL)
             converterService.selectCurrentURL(url: newURL)
-            converterService.loadPDFFiles() // Обновление списка файлов
+            converterService.loadPDFFiles()
         } catch {
             print("Ошибка при переименовании файла: \(error)")
         }
     }
     
-    // 2. Создание дубликата файла
     func createFileCopy() {
         guard let currentURL = currentURL else { return }
         let directory = currentURL.deletingLastPathComponent()
@@ -72,13 +68,12 @@ final class PDFViewerViewModel: ObservableObject {
         
         do {
             try FileManager.default.copyItem(at: currentURL, to: copyURL)
-            converterService.loadPDFFiles() // Обновление списка файлов
+            converterService.loadPDFFiles()
         } catch {
             print("Ошибка при создании копии файла: \(error)")
         }
     }
     
-    // 3. Отправка на печать
     func printFile() {
         guard let currentURL = currentURL else { return }
         let printController = UIPrintInteractionController.shared
@@ -94,7 +89,6 @@ final class PDFViewerViewModel: ObservableObject {
         }
     }
     
-    // 4. Удаление файла
     func activeDeleteFile() {
         isShowDeleteAlert.toggle()
     }
@@ -103,13 +97,12 @@ final class PDFViewerViewModel: ObservableObject {
         guard let currentURL = currentURL else { return }
         do {
             try FileManager.default.removeItem(at: currentURL)
-            converterService.loadPDFFiles() // Обновление списка файлов
+            converterService.loadPDFFiles()
         } catch {
             print("Ошибка при удалении файла: \(error)")
         }
     }
     
-    // 5. Шаринг файла
     func shareFile() {
         let usedURL = currentURL!
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -128,51 +121,8 @@ final class PDFViewerViewModel: ObservableObject {
             .$currentURL
             .sink { [weak self] in
                 self?.currentURL = $0
-                self?.loadPDFImages()
             }
             .store(in: &cancellables)
-    }
-    
-    private func convertPDFToImages(from url: URL) -> [UIImage]? {
-        guard let pdfDocument = PDFDocument(url: url) else { return nil }
-        var images: [UIImage] = []
-        
-        for pageIndex in 0..<pdfDocument.pageCount {
-            guard let page = pdfDocument.page(at: pageIndex) else { continue }
-            let pageRect = page.bounds(for: .mediaBox)
-            let rotation = page.rotation
-            let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-            let image = renderer.image { context in
-                let cgContext = context.cgContext
-                cgContext.saveGState()
-                cgContext.translateBy(x: 0, y: pageRect.size.height)
-                cgContext.scaleBy(x: 1.0, y: -1.0)
-                
-                if rotation != 0 {
-                    cgContext.translateBy(x: pageRect.midX, y: pageRect.midY)
-                    cgContext.rotate(by: CGFloat(rotation) * .pi / 180)
-                    cgContext.translateBy(x: -pageRect.midX, y: -pageRect.midY)
-                }
-
-                page.draw(with: .mediaBox, to: cgContext)
-                cgContext.restoreGState()
-            }
-            images.append(image)
-        }
-        
-        return images
-    }
-    
-    private func loadPDFImages() {
-        guard let currentURL = currentURL else { return }
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let images = self.convertPDFToImages(from: currentURL) {
-                DispatchQueue.main.async {
-                    self.pdfImages = images
-                    self.isCloseActionDisable = false
-                }
-            }
-        }
     }
 }
 

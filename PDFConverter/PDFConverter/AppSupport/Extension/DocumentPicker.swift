@@ -2,7 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentPicker: UIViewControllerRepresentable {
-    var completion: ([UIImage]) -> Void  // Завершение для возврата изображений
+    var completion: ([UIImage]) -> Void
     
     let closeCompletion: () -> Void
     
@@ -30,9 +30,8 @@ struct DocumentPicker: UIViewControllerRepresentable {
             var images = [UIImage]()
             
             for url in urls {
-                print("Selected URL: \(url)")  // Отладка URL
+                print("Selected URL: \(url)")
                 
-                // Проверка на изображение перед загрузкой данных
                 if url.startAccessingSecurityScopedResource() {
                     defer { url.stopAccessingSecurityScopedResource() }
                     do {

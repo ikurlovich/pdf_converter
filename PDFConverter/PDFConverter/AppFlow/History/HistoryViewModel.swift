@@ -81,7 +81,6 @@ final class HistoryViewModel: ObservableObject {
         converterService.selectCurrentURL(url: url)
     }
     
-    // 1. Изменение имени файла
     func activeRenameFile() {
         currentName = fileName
         isShowRenameAlert.toggle()
@@ -93,13 +92,12 @@ final class HistoryViewModel: ObservableObject {
         do {
             try FileManager.default.moveItem(at: currentURL, to: newURL)
             converterService.selectCurrentURL(url: newURL)
-            converterService.loadPDFFiles() // Обновление списка файлов
+            converterService.loadPDFFiles()
         } catch {
             print("Ошибка при переименовании файла: \(error)")
         }
     }
     
-    // 2. Создание дубликата файла
     func createFileCopy() {
         guard let currentURL = currentURL else { return }
         let directory = currentURL.deletingLastPathComponent()
@@ -115,13 +113,12 @@ final class HistoryViewModel: ObservableObject {
         
         do {
             try FileManager.default.copyItem(at: currentURL, to: copyURL)
-            converterService.loadPDFFiles() // Обновление списка файлов
+            converterService.loadPDFFiles()
         } catch {
             print("Ошибка при создании копии файла: \(error)")
         }
     }
     
-    // 3. Отправка на печать
     func printFile() {
         guard let currentURL = currentURL else { return }
         let printController = UIPrintInteractionController.shared
@@ -136,8 +133,7 @@ final class HistoryViewModel: ObservableObject {
             print("Ошибка при открытии файла для печати.")
         }
     }
-    
-    // 4. Удаление файла
+
     func activeDeleteFile() {
         isShowDeleteAlert.toggle()
     }
@@ -146,13 +142,12 @@ final class HistoryViewModel: ObservableObject {
         guard let currentURL = currentURL else { return }
         do {
             try FileManager.default.removeItem(at: currentURL)
-            converterService.loadPDFFiles() // Обновление списка файлов
+            converterService.loadPDFFiles()
         } catch {
             print("Ошибка при удалении файла: \(error)")
         }
     }
-    
-    // 5. Шаринг файла
+
     func shareFile() {
         let usedURL = currentURL!
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

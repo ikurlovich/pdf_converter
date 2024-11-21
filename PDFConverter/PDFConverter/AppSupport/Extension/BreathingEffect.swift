@@ -7,7 +7,9 @@ extension View {
 }
 
 struct BreathingEffect: ViewModifier {
-    @State private var isAnimating = false
+    @State 
+    private var isAnimating = false
+    
     var scale: CGFloat
     var duration: Double
 
