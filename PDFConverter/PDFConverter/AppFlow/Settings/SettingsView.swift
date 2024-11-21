@@ -16,6 +16,8 @@ struct SettingsView: View {
     @State
     private var isShowAlert = false
     
+    let paywallAction: () -> Void
+    
     var body: some View {
         VStack {
             customNavigationPanel()
@@ -89,10 +91,12 @@ struct SettingsView: View {
     
     @ViewBuilder
     private func settingsBanner() -> some View {
-        Image(.settingsBanner)
-            .resizable()
-            .scaledToFit()
-            .padding(.bottom, 10)
+        Button(action: paywallAction) {
+            Image(.settingsBanner)
+                .resizable()
+                .scaledToFit()
+                .padding(.bottom, 10)
+        }
     }
     
     @ViewBuilder
@@ -173,5 +177,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(backAction: {})
+    SettingsView(backAction: {}, paywallAction: {})
 }

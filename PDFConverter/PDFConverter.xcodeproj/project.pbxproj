@@ -71,6 +71,9 @@
 		20E58A012CE1A9C900CCEA28 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E58A002CE1A9C900CCEA28 /* MailView.swift */; };
 		20FB48D92CEBA87000729F16 /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB48D82CEBA87000729F16 /* PDFViewer.swift */; };
 		20FB48DC2CEBAA2700729F16 /* PDFViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB48DB2CEBAA2700729F16 /* PDFViewerViewModel.swift */; };
+		20FB48DF2CEE7C0900729F16 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 20FB48DE2CEE7C0900729F16 /* Lottie */; };
+		20FB48E22CEE7C4400729F16 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB48E12CEE7C4400729F16 /* LottieView.swift */; };
+		20FB48E42CEE7CAE00729F16 /* PDFLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 20FB48E32CEE7CAD00729F16 /* PDFLoading.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +119,8 @@
 		20E58A002CE1A9C900CCEA28 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		20FB48D82CEBA87000729F16 /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
 		20FB48DB2CEBAA2700729F16 /* PDFViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerViewModel.swift; sourceTree = "<group>"; };
+		20FB48E12CEE7C4400729F16 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		20FB48E32CEE7CAD00729F16 /* PDFLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PDFLoading.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +143,7 @@
 				200E2DC62CDD085C00BB178B /* FirebaseMessaging in Frameworks */,
 				200E2DC22CDD085C00BB178B /* FirebaseInstallations in Frameworks */,
 				200E2DBE2CDD085C00BB178B /* FirebaseFunctionsCombine-Community in Frameworks */,
+				20FB48DF2CEE7C0900729F16 /* Lottie in Frameworks */,
 				200E2DAA2CDD085C00BB178B /* FirebaseAppDistribution-Beta in Frameworks */,
 				200E2DA62CDD085C00BB178B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				200E2DC02CDD085C00BB178B /* FirebaseInAppMessaging-Beta in Frameworks */,
@@ -201,6 +207,7 @@
 		200E2D8E2CDBFC0000BB178B /* AppSupport */ = {
 			isa = PBXGroup;
 			children = (
+				20FB48E02CEE7C2C00729F16 /* Animations */,
 				20E589F52CE17F3F00CCEA28 /* DefaultsStorage */,
 				20E589E72CDFA08E00CCEA28 /* ReusableElements */,
 				200E2D9D2CDD079700BB178B /* Services */,
@@ -369,6 +376,15 @@
 			path = PDFViewer;
 			sourceTree = "<group>";
 		};
+		20FB48E02CEE7C2C00729F16 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				20FB48E12CEE7C4400729F16 /* LottieView.swift */,
+				20FB48E32CEE7CAD00729F16 /* PDFLoading.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -410,6 +426,7 @@
 				200E2DCB2CDD085C00BB178B /* FirebaseStorage */,
 				200E2DCD2CDD085C00BB178B /* FirebaseStorageCombine-Community */,
 				200E2DCF2CDD085C00BB178B /* FirebaseVertexAI */,
+				20FB48DE2CEE7C0900729F16 /* Lottie */,
 			);
 			productName = PDFConverter;
 			productReference = 2089ADCD2CD670B10053A68E /* PDFConverter.app */;
@@ -441,6 +458,7 @@
 			mainGroup = 2089ADC42CD670B10053A68E;
 			packageReferences = (
 				200E2DA02CDD085C00BB178B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				20FB48DD2CEE7C0900729F16 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 2089ADCE2CD670B10053A68E /* Products */;
 			projectDirPath = "";
@@ -458,6 +476,7 @@
 			files = (
 				2089ADE52CD6728D0053A68E /* Launch Screen.storyboard in Resources */,
 				200E2D9C2CDD06ED00BB178B /* GoogleService-Info.plist in Resources */,
+				20FB48E42CEE7CAE00729F16 /* PDFLoading.json in Resources */,
 				2089ADD82CD670B20053A68E /* Preview Assets.xcassets in Resources */,
 				2089ADD52CD670B20053A68E /* Assets.xcassets in Resources */,
 			);
@@ -498,6 +517,7 @@
 				2089ADD12CD670B10053A68E /* PDFConverterApp.swift in Sources */,
 				20E589FD2CE18EC600CCEA28 /* PaywallViewModel.swift in Sources */,
 				2079A41E2CE4022D00C83E81 /* ScannerView.swift in Sources */,
+				20FB48E22CEE7C4400729F16 /* LottieView.swift in Sources */,
 				20E589F22CE1790A00CCEA28 /* OnboardingLabel.swift in Sources */,
 				20E589F42CE17BD100CCEA28 /* OnboardingCoordinator.swift in Sources */,
 				20E589F02CE1782400CCEA28 /* OnboardingStep.swift in Sources */,
@@ -743,6 +763,14 @@
 				minimumVersion = 11.4.0;
 			};
 		};
+		20FB48DD2CEE7C0900729F16 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -865,6 +893,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 200E2DA02CDD085C00BB178B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseVertexAI;
+		};
+		20FB48DE2CEE7C0900729F16 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20FB48DD2CEE7C0900729F16 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

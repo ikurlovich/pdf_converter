@@ -31,6 +31,11 @@ struct PhotoPicker: UIViewControllerRepresentable {
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
+            guard !results.isEmpty else {
+                // Если ничего не выбрано, просто выходим и не вызываем completion
+                return
+            }
+            
             var images = [UIImage]()
             let group = DispatchGroup()  // Для синхронизации загрузки всех изображений
             

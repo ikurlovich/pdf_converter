@@ -25,15 +25,21 @@ struct AppCoordinatorView: View {
             case .tabBar:
                 tabBar()
             case .settings:
-                SettingsView(backAction: { selectView(.tabBar) })
+                SettingsView(backAction: { selectView(.tabBar) }, 
+                             paywallAction: { selectView(.paywall) })
                     .transition(.move(edge: .trailing))
             case .scan:
                 ScanView(mainAction: { selectView(.tabBar) },
                          converterAction: { selectView(.converter) })
             case .converter:
-                ConverterView(backAction: { selectView(.tabBar) })
+                ConverterView(backAction: { selectView(.tabBar) }, 
+                              openViewerAction: { selectView(.pdfViewer) }, 
+                              openHistoryAction: {
+                    selectView(.tabBar)
+                    coordinator.tabBarState = 1
+                })
             case .pdfViewer:
-                PDFViewer(historyAction: {
+                PDFViewer(onClose: {
                     selectView(.tabBar)
                     coordinator.tabBarState = 1
                 })
@@ -67,7 +73,8 @@ struct AppCoordinatorView: View {
             .tag(0)
             
             HistoryView(backAction: { coordinator.tabBarState = 0 }, 
-                        pdfViverAction: { selectView(.pdfViewer) })
+                        pdfViverAction: { selectView(.pdfViewer) }, 
+                        paywallAction: { selectView(.paywall) })
                 .tabItem {
                     Image(.history)
                     

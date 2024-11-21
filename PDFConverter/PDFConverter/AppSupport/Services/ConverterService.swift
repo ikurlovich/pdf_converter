@@ -1,6 +1,5 @@
 import UIKit
 import PDFKit
-import Combine
 
 struct PrepareImage {
     let id: UUID
@@ -13,6 +12,7 @@ struct PDFItem: Codable, Equatable {
     let date: Date
     let name: String
     let pages: Int
+    let weight: Int64
     let url: URL
     let coverImageData: Data
     
@@ -20,11 +20,12 @@ struct PDFItem: Codable, Equatable {
         UIImage(data: coverImageData)
     }
     
-    init(id: UUID, date: Date, name: String, pages: Int, url: URL, coverImage: UIImage) {
+    init(id: UUID, date: Date, name: String, pages: Int, weight: Int64, url: URL, coverImage: UIImage) {
         self.id = id
         self.date = date
         self.name = name
         self.pages = pages
+        self.weight = weight
         self.url = url
         self.coverImageData = coverImage.pngData() ?? Data()
     }
@@ -40,7 +41,7 @@ final class ConverterService {
     private (set) var prepareImages: [PrepareImage] = []
     
     @Published
-    private (set) var pdfItems: [PDFItem] = []
+    private (set) var pdfItems: [PDFItem] = .example
     
     @Published
     private (set) var fileName: String = ""
@@ -48,15 +49,62 @@ final class ConverterService {
     @Published
     private (set) var currentURL: URL?
     
-    private let keyValueStorage: KeyValueStorage
+    private let fileManager = FileManager.default
     
-    private var cancellables: Set<AnyCancellable> = []
-    
-    init(keyValueStorage: KeyValueStorage = DefaultsStorage()) {
-        self.keyValueStorage = keyValueStorage
-        self.pdfItems = (try? keyValueStorage.entity(forKey: .pdfItems)) ?? []
+    func loadPDFFiles() {
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Не удалось получить путь к директории")
+            return
+        }
         
-        observedPDFItems()
+        do {
+            // Получаем все файлы в директории с расширением .pdf
+            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: [.creationDateKey, .fileSizeKey], options: .skipsHiddenFiles)
+                .filter { $0.pathExtension.lowercased() == "pdf" }
+            
+            // Обрабатываем каждый PDF файл
+            pdfItems = fileURLs.compactMap { processPDF(at: $0) }
+        } catch {
+            print("Ошибка при чтении директории: \(error)")
+        }
+    }
+    
+    private func processPDF(at url: URL) -> PDFItem? {
+        guard let pdfDocument = PDFDocument(url: url) else {
+            print("Не удалось открыть PDF: \(url.lastPathComponent)")
+            return nil
+        }
+        
+        // Получаем имя файла
+        let fileName = url.deletingPathExtension().lastPathComponent
+        
+        // Получаем превью первой страницы
+        let coverImage = pdfDocument.page(at: 0)?.thumbnail(of: CGSize(width: 200, height: 300), for: .mediaBox)
+        
+        // Получаем дату создания
+        let attributes = try? fileManager.attributesOfItem(atPath: url.path)
+        let creationDate = attributes?[.creationDate] as? Date ?? Date()
+        
+        // Количество страниц
+        let pageCount = pdfDocument.pageCount
+        
+        // Вес файла
+        let fileSize = (attributes?[.size] as? Int64 ?? 0) / 1024 // в КБ
+        
+        guard let coverImage = coverImage else {
+            print("Не удалось получить превью для PDF: \(fileName)")
+            return nil
+        }
+        
+        return PDFItem(
+            id: UUID(),
+            date: creationDate,
+            name: fileName,
+            pages: pageCount,
+            weight: fileSize,
+            url: url,
+            coverImage: coverImage
+        )
     }
     
     func addImages(images: [UIImage]) {
@@ -89,7 +137,27 @@ final class ConverterService {
     }
     
     func cleanHistory() {
-        pdfItems.removeAll()
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Не удалось получить путь к директории")
+            return
+        }
+        
+        do {
+            // Получаем список всех файлов с расширением .pdf
+            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                .filter { $0.pathExtension.lowercased() == "pdf" }
+            
+            // Удаляем каждый файл
+            for fileURL in fileURLs {
+                try fileManager.removeItem(at: fileURL)
+            }
+            
+            // Очищаем массив pdfItems
+            pdfItems.removeAll()
+            print("История очищена и все файлы удалены")
+        } catch {
+            print("Ошибка при удалении файлов: \(error)")
+        }
     }
     
     func selectCurrentURL(url: URL) {
@@ -118,9 +186,6 @@ final class ConverterService {
         
         if pdfDocument.write(to: fileURL) {
             print("PDF сохранен по пути: \(fileURL)")
-            
-            let pagesCount = prepareImages.filter { $0.isAppend }.count
-            pdfItems.append(PDFItem(id: UUID(), date: Date.now, name: fileName, pages: pagesCount, url: fileURL, coverImage: images.first!))
             currentURL = fileURL
             cleanFileName()
             cleanPrepareImages()
@@ -128,14 +193,6 @@ final class ConverterService {
         } else {
             print("Не удалось сохранить PDF")
         }
-    }
-    
-    private func observedPDFItems() {
-        $pdfItems
-            .sink { [weak self] in
-                try? self?.keyValueStorage.set(entity: $0, forKey: .pdfItems)
-            }
-            .store(in: &cancellables)
     }
 }
 
@@ -161,6 +218,7 @@ extension Array where Element == PDFItem {
                 date: Date.now,
                 name: "Scanned(\(Date.now.formatted()))",
                 pages: 3,
+                weight: 1024,
                 url: url,
                 coverImage: image
             )

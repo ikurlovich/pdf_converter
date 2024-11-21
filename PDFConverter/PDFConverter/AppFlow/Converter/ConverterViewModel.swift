@@ -2,6 +2,13 @@ import Foundation
 import Combine
 
 final class ConverterViewModel: ObservableObject {
+    enum ViewState {
+        case converter, loading, complete
+    }
+    
+    @Published
+    var view: ViewState = .converter
+    
     @Published
     private (set) var prepareImages: [PrepareImage] = []
     
