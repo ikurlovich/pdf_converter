@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct PDFConverterApp: App {
-    @UIApplicationDelegateAdaptor(FirebaseAppDelegate.self) var delegate
+    @UIApplicationDelegateAdaptor(MainAppDelegate.self) var delegate
     
     init() {
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.darkGray

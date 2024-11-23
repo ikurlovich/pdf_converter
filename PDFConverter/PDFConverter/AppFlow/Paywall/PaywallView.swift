@@ -38,7 +38,7 @@ struct PaywallView: View {
                 }
                 
                 Button {
-                    
+                    viewModel.restorePurchases()
                 } label: {
                     Text("Restore")
                         .foregroundStyle(.black)
@@ -86,7 +86,15 @@ struct PaywallView: View {
     @ViewBuilder
     private func paywallButton() -> some View {
         VStack {
-            PaywallReLabel(isActiveTrial: viewModel.isActiveTrial)
+            Button{
+                viewModel.purchaseSubscription()
+            } label: {
+                if viewModel.observeAppConfig.isReview {
+                    PaywallReLabel(isActiveTrial: viewModel.isActiveTrial)
+                } else {
+                    OnboardingLabel()
+                }
+            }
             paywallServiceRow()
         }
         .padding(.horizontal)

@@ -11,7 +11,7 @@
 		200E2D972CDC018000BB178B /* RoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200E2D962CDC018000BB178B /* RoundedCorners.swift */; };
 		200E2D9A2CDD067900BB178B /* AppUIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200E2D992CDD067900BB178B /* AppUIService.swift */; };
 		200E2D9C2CDD06ED00BB178B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 200E2D9B2CDD06ED00BB178B /* GoogleService-Info.plist */; };
-		200E2D9F2CDD07CD00BB178B /* FirebaseAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200E2D9E2CDD07CD00BB178B /* FirebaseAppService.swift */; };
+		200E2D9F2CDD07CD00BB178B /* MainAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200E2D9E2CDD07CD00BB178B /* MainAppDelegate.swift */; };
 		200E2DA22CDD085C00BB178B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 200E2DA12CDD085C00BB178B /* FirebaseAnalytics */; };
 		200E2DA42CDD085C00BB178B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 200E2DA32CDD085C00BB178B /* FirebaseAnalyticsOnDeviceConversion */; };
 		200E2DA62CDD085C00BB178B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 200E2DA52CDD085C00BB178B /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -74,6 +74,11 @@
 		20FB48DF2CEE7C0900729F16 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 20FB48DE2CEE7C0900729F16 /* Lottie */; };
 		20FB48E22CEE7C4400729F16 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB48E12CEE7C4400729F16 /* LottieView.swift */; };
 		20FB48E42CEE7CAE00729F16 /* PDFLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 20FB48E32CEE7CAD00729F16 /* PDFLoading.json */; };
+		20FB48E72CF07DD200729F16 /* Adapty in Frameworks */ = {isa = PBXBuildFile; productRef = 20FB48E62CF07DD200729F16 /* Adapty */; };
+		20FB48E92CF07DD200729F16 /* AdaptyPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 20FB48E82CF07DD200729F16 /* AdaptyPlugin */; };
+		20FB48EB2CF07DD200729F16 /* AdaptyUI in Frameworks */ = {isa = PBXBuildFile; productRef = 20FB48EA2CF07DD200729F16 /* AdaptyUI */; };
+		20FB48ED2CF07DD200729F16 /* AdaptyUITesting in Frameworks */ = {isa = PBXBuildFile; productRef = 20FB48EC2CF07DD200729F16 /* AdaptyUITesting */; };
+		20FB48F42CF08BC800729F16 /* AdaptyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FB48F32CF08BC800729F16 /* AdaptyService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,7 +86,7 @@
 		200E2D962CDC018000BB178B /* RoundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorners.swift; sourceTree = "<group>"; };
 		200E2D992CDD067900BB178B /* AppUIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUIService.swift; sourceTree = "<group>"; };
 		200E2D9B2CDD06ED00BB178B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		200E2D9E2CDD07CD00BB178B /* FirebaseAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAppService.swift; sourceTree = "<group>"; };
+		200E2D9E2CDD07CD00BB178B /* MainAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppDelegate.swift; sourceTree = "<group>"; };
 		200E2DD12CDD1D6800BB178B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		200E2DD32CDD1D7600BB178B /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		200E2DD52CDD1D8F00BB178B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -121,6 +126,7 @@
 		20FB48DB2CEBAA2700729F16 /* PDFViewerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewerViewModel.swift; sourceTree = "<group>"; };
 		20FB48E12CEE7C4400729F16 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		20FB48E32CEE7CAD00729F16 /* PDFLoading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PDFLoading.json; sourceTree = "<group>"; };
+		20FB48F32CF08BC800729F16 /* AdaptyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptyService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,14 +139,17 @@
 				200E2DBC2CDD085C00BB178B /* FirebaseFunctions in Frameworks */,
 				200E2DC82CDD085C00BB178B /* FirebasePerformance in Frameworks */,
 				200E2DCE2CDD085C00BB178B /* FirebaseStorageCombine-Community in Frameworks */,
+				20FB48EB2CF07DD200729F16 /* AdaptyUI in Frameworks */,
 				200E2DCA2CDD085C00BB178B /* FirebaseRemoteConfig in Frameworks */,
 				200E2DB42CDD085C00BB178B /* FirebaseDatabase in Frameworks */,
 				200E2DB62CDD085C00BB178B /* FirebaseDynamicLinks in Frameworks */,
 				200E2DA82CDD085C00BB178B /* FirebaseAppCheck in Frameworks */,
 				200E2DAC2CDD085C00BB178B /* FirebaseAuth in Frameworks */,
 				200E2DA22CDD085C00BB178B /* FirebaseAnalytics in Frameworks */,
+				20FB48E92CF07DD200729F16 /* AdaptyPlugin in Frameworks */,
 				200E2DB82CDD085C00BB178B /* FirebaseFirestore in Frameworks */,
 				200E2DC62CDD085C00BB178B /* FirebaseMessaging in Frameworks */,
+				20FB48E72CF07DD200729F16 /* Adapty in Frameworks */,
 				200E2DC22CDD085C00BB178B /* FirebaseInstallations in Frameworks */,
 				200E2DBE2CDD085C00BB178B /* FirebaseFunctionsCombine-Community in Frameworks */,
 				20FB48DF2CEE7C0900729F16 /* Lottie in Frameworks */,
@@ -151,6 +160,7 @@
 				200E2DB22CDD085C00BB178B /* FirebaseCrashlytics in Frameworks */,
 				200E2DC42CDD085C00BB178B /* FirebaseMLModelDownloader in Frameworks */,
 				200E2DCC2CDD085C00BB178B /* FirebaseStorage in Frameworks */,
+				20FB48ED2CF07DD200729F16 /* AdaptyUITesting in Frameworks */,
 				200E2DB02CDD085C00BB178B /* FirebaseCore in Frameworks */,
 				200E2DA42CDD085C00BB178B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 			);
@@ -242,8 +252,9 @@
 		200E2D9D2CDD079700BB178B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				20FB48F32CF08BC800729F16 /* AdaptyService.swift */,
 				200E2D992CDD067900BB178B /* AppUIService.swift */,
-				200E2D9E2CDD07CD00BB178B /* FirebaseAppService.swift */,
+				200E2D9E2CDD07CD00BB178B /* MainAppDelegate.swift */,
 				20E589EA2CDFC91B00CCEA28 /* PermissionsService.swift */,
 				2087C19F2CEAA11A009C0F18 /* ConverterService.swift */,
 			);
@@ -273,6 +284,7 @@
 			children = (
 				2089ADCF2CD670B10053A68E /* PDFConverter */,
 				2089ADCE2CD670B10053A68E /* Products */,
+				20FB48EE2CF0830D00729F16 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -385,6 +397,13 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
+		20FB48EE2CF0830D00729F16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -427,6 +446,10 @@
 				200E2DCD2CDD085C00BB178B /* FirebaseStorageCombine-Community */,
 				200E2DCF2CDD085C00BB178B /* FirebaseVertexAI */,
 				20FB48DE2CEE7C0900729F16 /* Lottie */,
+				20FB48E62CF07DD200729F16 /* Adapty */,
+				20FB48E82CF07DD200729F16 /* AdaptyPlugin */,
+				20FB48EA2CF07DD200729F16 /* AdaptyUI */,
+				20FB48EC2CF07DD200729F16 /* AdaptyUITesting */,
 			);
 			productName = PDFConverter;
 			productReference = 2089ADCD2CD670B10053A68E /* PDFConverter.app */;
@@ -459,6 +482,7 @@
 			packageReferences = (
 				200E2DA02CDD085C00BB178B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				20FB48DD2CEE7C0900729F16 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				20FB48E52CF07DD200729F16 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */,
 			);
 			productRefGroup = 2089ADCE2CD670B10053A68E /* Products */;
 			projectDirPath = "";
@@ -496,13 +520,14 @@
 				200E2D942CDBFE3E00BB178B /* MainView.swift in Sources */,
 				20E589F72CE17F4900CCEA28 /* DefaultsStorage.swift in Sources */,
 				2087C1A52CEAC5A0009C0F18 /* ScanView.swift in Sources */,
-				200E2D9F2CDD07CD00BB178B /* FirebaseAppService.swift in Sources */,
+				200E2D9F2CDD07CD00BB178B /* MainAppDelegate.swift in Sources */,
 				20E589DF2CDD252600CCEA28 /* MainViewModel.swift in Sources */,
 				20E589FF2CE1A8AB00CCEA28 /* AppInfo.swift in Sources */,
 				2087C1A92CEB683D009C0F18 /* ConverterViewModel.swift in Sources */,
 				200E2DD82CDD1D9C00BB178B /* HistoryView.swift in Sources */,
 				200E2DD62CDD1D8F00BB178B /* SettingsView.swift in Sources */,
 				20E589FB2CE18D0800CCEA28 /* PaywallReLabel.swift in Sources */,
+				20FB48F42CF08BC800729F16 /* AdaptyService.swift in Sources */,
 				200E2D9A2CDD067900BB178B /* AppUIService.swift in Sources */,
 				2087C19E2CE90CA6009C0F18 /* ConverterView.swift in Sources */,
 				20E589DD2CDD232000CCEA28 /* PhotoPicker.swift in Sources */,
@@ -660,7 +685,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PDFConverter/Preview Content\"";
-				DEVELOPMENT_TEAM = 8Q8855SSVY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PDFConverter/Info.plist;
@@ -700,7 +725,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PDFConverter/Preview Content\"";
-				DEVELOPMENT_TEAM = 8Q8855SSVY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PDFConverter/Info.plist;
@@ -769,6 +794,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.5.0;
+			};
+		};
+		20FB48E52CF07DD200729F16 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adaptyteam/AdaptySDK-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -898,6 +931,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20FB48DD2CEE7C0900729F16 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		20FB48E62CF07DD200729F16 /* Adapty */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20FB48E52CF07DD200729F16 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = Adapty;
+		};
+		20FB48E82CF07DD200729F16 /* AdaptyPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20FB48E52CF07DD200729F16 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = AdaptyPlugin;
+		};
+		20FB48EA2CF07DD200729F16 /* AdaptyUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20FB48E52CF07DD200729F16 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = AdaptyUI;
+		};
+		20FB48EC2CF07DD200729F16 /* AdaptyUITesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20FB48E52CF07DD200729F16 /* XCRemoteSwiftPackageReference "AdaptySDK-iOS" */;
+			productName = AdaptyUITesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

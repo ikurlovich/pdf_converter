@@ -41,6 +41,8 @@ final class HistoryViewModel: ObservableObject {
         currentURL?.deletingPathExtension().lastPathComponent ?? "Error"
     }
     
+    let adaptyService: AdaptyService = .shared
+    
     private let converterService: ConverterService = .shared
     
     private var cancellables: Set<AnyCancellable> = []

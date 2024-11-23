@@ -12,6 +12,7 @@ final class AppCoordinator: ObservableObject {
     private (set) var currentView: ViewState = .tabBar
     
     private let keyValueStorage: KeyValueStorage
+    private let adaptyService: AdaptyService = .shared
     
     private var isOnboardingShown: Bool
     
@@ -28,7 +29,12 @@ final class AppCoordinator: ObservableObject {
     
     private func onAppear() {
         if isOnboardingShown {
-            currentView = .paywall
+            if adaptyService.subscriptionStatus {
+                currentView = .tabBar
+            } else {
+                currentView = .paywall
+            }
+            
         } else {
             showOnboarding()
         }

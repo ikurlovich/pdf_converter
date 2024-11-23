@@ -8,6 +8,12 @@ struct AppInfo {
     }
     
     struct Emails {
-        static let supportEmail = "test.test.com"
+        static let supportEmail: String = "test.test.com"
+    }
+    
+    struct SDKAdapty {
+        static let apiKey: String = "YOUR_ADAPTY_API_KEY"
+        static let productId: String = "weekly_subscription_6_99"
+        static let accessLevel: String = "premium"
     }
 }

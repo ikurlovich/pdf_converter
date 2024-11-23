@@ -22,6 +22,7 @@ struct AppCoordinatorView: View {
                 OnboardingView(coordinator: c)
             case .paywall:
                 PaywallView(closeAction: { selectView(.tabBar) })
+                    .transition(.move(edge: .bottom))
             case .tabBar:
                 tabBar()
             case .settings:

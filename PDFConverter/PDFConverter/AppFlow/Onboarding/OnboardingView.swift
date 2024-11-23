@@ -61,7 +61,7 @@ struct OnboardingView: View {
     }
     
     private func callReview() {
-        if coordinator.observeAppConfig.isReview && !reviewRequested {
+        if coordinator.observeAppConfig.enabledAppRatingRequest && !reviewRequested {
             requestReview()
             reviewRequested = true
         }

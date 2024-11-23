@@ -16,6 +16,8 @@ struct SettingsView: View {
     @State
     private var isShowAlert = false
     
+    private let adaptyService: AdaptyService = .shared
+    
     let paywallAction: () -> Void
     
     var body: some View {
@@ -31,7 +33,9 @@ struct SettingsView: View {
     @ViewBuilder
     private func settingsItems() -> some View {
         VStack {
-            settingsBanner()
+            if !adaptyService.subscriptionStatus {
+                settingsBanner()
+            }
             
             VStack {
                 settingsItem(

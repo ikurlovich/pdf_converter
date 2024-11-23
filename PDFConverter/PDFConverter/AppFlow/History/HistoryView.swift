@@ -34,7 +34,6 @@ struct HistoryView: View {
         } message: {
             Text("Enter a new name for your PDF file.")
         }
-        
     }
     
     @ViewBuilder
@@ -209,11 +208,13 @@ struct HistoryView: View {
     @ViewBuilder
     private func sortedMenu() -> some View {
         Menu {
-            Button("Unlock Premium", systemImage: "crown") {
-                paywallAction()
+            if !viewModel.adaptyService.subscriptionStatus {
+                Button("Unlock Premium", systemImage: "crown") {
+                    paywallAction()
+                }
+                
+                Divider()
             }
-            
-            Divider()
             
             Section("Sort by:") {
                 Button("Date Added") {

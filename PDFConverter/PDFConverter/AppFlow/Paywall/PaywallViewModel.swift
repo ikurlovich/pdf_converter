@@ -12,6 +12,7 @@ final class PaywallViewModel: ObservableObject {
     private (set) var observeAppConfig = AppConfig.default
     
     private let appUIService: AppUIService = .shared
+    let adaptyService: AdaptyService = .shared
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -21,6 +22,20 @@ final class PaywallViewModel: ObservableObject {
     
     func onAppear() {
         startTimer()
+    }
+    
+    func purchaseSubscription() {
+        if isActiveTrial {
+            if adaptyService.hasTrial() {
+                adaptyService.purchaseSubscription(type: .weeklyTrial)
+            }
+        } else {
+            adaptyService.purchaseSubscription(type: .weekly)
+        }
+    }
+    
+    func restorePurchases() {
+        adaptyService.restorePurchases()
     }
     
     private func startTimer() {
